@@ -1,0 +1,33 @@
+.tabs-navbar {
+    display: flex;
+    justify-content: space-around; 
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-bottom: 2px solid #dee2e6;
+    width: 100%; 
+    box-sizing: border-box; 
+  }
+  
+  .tabs-navbar button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    flex: 1; 
+    text-align: center; 
+    color:black;
+  }
+  
+  .tabs-navbar button.active {
+    background-color: #007bff;
+    color: rgb(182, 20, 20);
+    border-radius: 4px;
+  }
+  
+  .tabs-navbar button:hover {
+    background-color: #e2e6ea;
+    border-radius: 4px;
+  }
+  
