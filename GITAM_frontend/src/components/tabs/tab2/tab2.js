@@ -157,7 +157,7 @@ const Tab2 = () => {
         </td>
         <td>
           <input
-            type="text"
+            type="number"
             className="form-control"
             placeholder="Enter time in mins"
             onChange={(e) => handleGeneralInstrumentChange(i, 'time', e.target.value)}
@@ -289,7 +289,7 @@ const Tab2 = () => {
               <td>{row.label}</td>
               <td>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   value={mainInstrumentTables[instrumentIndex]?.[row.field] || ''}
                   onChange={(e) =>
@@ -305,44 +305,100 @@ const Tab2 = () => {
   };
   
   const handleSubmit = async () => {
-    const requestData = {
-      generalInstruments: generalInstrumentData, // General instruments data
-      mainInstruments: mainInstrumentData.map((instrument, index) => {
-        const instrumentData = mainInstrumentTables[index] || {};
-        return {
-          instrument,
-          data: instrumentData,
-        };
-      }),
-    };
-  
-    console.log("Request Data:", JSON.stringify(requestData, null, 2)); // Debugging step
-  
     try {
-      const response = await fetch('http://localhost:8080/api/tab2-data', {
-        method: 'POST',
+      // Validation for General Instruments
+      if (generalInstrumentRows === 0 && mainInstrumentsCount === 0) {
+        alert("Please enter the number of general instruments or main instruments or both.");
+        return;
+      }
+  
+      // Validate General Instruments Data
+      if (generalInstrumentRows > 0) {
+        const isGeneralInstrumentDataValid = generalInstrumentData.every(
+          (row) => row.instrument && row.time
+        );
+        if (!isGeneralInstrumentDataValid) {
+          alert("Please fill out all fields for general instruments.");
+          return;
+        }
+      }
+  
+      // Validate Main Instruments
+      if (mainInstrumentsCount > 0) {
+        // Ensure all main instrument dropdowns have a selected value
+        if (!mainInstrumentData.every((instrument) => instrument)) {
+          alert("Please select a main instrument for all dropdowns.");
+          return;
+        }
+  
+        // Validate each main instrument's table fields
+        const isMainInstrumentTablesValid = mainInstrumentData.every((instrument, index) => {
+          const tableData = mainInstrumentTables[index] || {}; // Ensure it's an object
+  
+          // Define the required fields for each instrument type
+          const tableStructure = {
+            HPLC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+            LC_MS: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+            NMR: ["scan_time", "num_scans"],
+            GC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+            IR: ["scan_time", "num_scans"],
+            UV: ["scan_time", "num_scans"],
+            UPLC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+            UHPLC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+            GC_MS: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+            FT_IR: ["scan_time", "num_scans"],
+            Dissolution: ["Media Volume used for 6 bowls", "Time in mins"],
+            OtherInstruments: ["Time for of study", "Number of samles studied"],
+          };
+  
+          // Retrieve required fields for the selected instrument
+          const requiredFields = tableStructure[instrument] || [];
+  
+          // Ensure all required fields have a non-empty value
+          return requiredFields.every((field) => tableData[field]?.trim());
+        });
+  
+        if (!isMainInstrumentTablesValid) {
+          alert("Please fill out all required fields in the main instrument tables.");
+          return;
+        }
+      }
+  
+      // Prepare request data
+      const requestData = {
+        generalInstruments: generalInstrumentData, // General instruments data
+        mainInstruments: mainInstrumentData.map((instrument, index) => ({
+          instrument,
+          data: mainInstrumentTables[index] || {},
+        })),
+      };
+  
+      console.log("Request Data:", JSON.stringify(requestData, null, 2)); // Debugging step
+  
+      // API Request
+      const response = await fetch("http://localhost:8080/api/tab2-data", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(requestData),
       });
   
-      if (response.ok) {
-        console.log('Data submitted successfully!');
-      } else {
-        console.error('Error submitting data:', response.statusText);
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
       }
+  
+      console.log("Data submitted successfully!");
+      navigate("/dashboard/tab3"); // Navigate only if submission is successful
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Submission Error:", error);
+      alert("An error occurred while submitting the data. Please try again.");
     }
-  
-    navigate('/dashboard/tab3');
   };
-  
-  return (
+return( 
     <div className="container mt-4">
       <h3>Instruments/Equipments</h3>
-
+  
       <div className="mb-3">
         <label>Number of General Instruments Used:</label>
         <input
@@ -352,7 +408,7 @@ const Tab2 = () => {
           onChange={(e) => setGeneralInstrumentRows(Number(e.target.value))}
         />
       </div>
-
+  
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -362,7 +418,7 @@ const Tab2 = () => {
         </thead>
         <tbody>{generateGeneralInstrumentTable(generalInstrumentRows)}</tbody>
       </table>
-
+  
       <div className="mb-3">
         <label>Number of Main Instruments Used:</label>
         <input
@@ -372,15 +428,12 @@ const Tab2 = () => {
           onChange={(e) => setMainInstrumentsCount(Number(e.target.value))}
         />
       </div>
-
+  
       {generateMainInstrumentDropdowns(mainInstrumentsCount)}
-
-
-      
+  
       <footer>
         <button onClick={() => navigate('/dashboard/tab1')}>Back</button>
         <button onClick={handleSubmit}>Next</button>
-      {/*  <button className="btn btn-primary"  onClick={handleSubmit}>Submit</button> */}
       </footer>
     </div>
   );

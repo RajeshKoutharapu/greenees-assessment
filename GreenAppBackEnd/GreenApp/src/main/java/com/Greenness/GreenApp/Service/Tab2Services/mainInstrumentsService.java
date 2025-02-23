@@ -23,7 +23,7 @@ public class mainInstrumentsService {
         maininstrumentsmap.put("UHPLC (UPLC)", 0.2);
         maininstrumentsmap.put("GC/MSD", 0.7);
         maininstrumentsmap.put("Triple Quadrupole GC/MS", 0.7);
-        maininstrumentsmap.put("LC/MSD iQ", 0.8);
+        maininstrumentsmap.put("LC-MS", 0.8);
         maininstrumentsmap.put("GC", 0.4);
         maininstrumentsmap.put("Single Quadrupole GC-MS", 0.5);
         maininstrumentsmap.put("Triple Quadrupole LC/MS system", 1.3);
@@ -60,6 +60,8 @@ public class mainInstrumentsService {
 			  //this conditions saparate the operation condition based on give prototype
 			 if(mainInstrumenttemp.getInstrumentName().equals("HPLC") || mainInstrumenttemp.getInstrumentName().equals("UHPLC") || mainInstrumenttemp.getInstrumentName().equals("UPLC") || mainInstrumenttemp.getInstrumentName().equals("LC-MS") || mainInstrumenttemp.getInstrumentName().equals("GC") || mainInstrumenttemp.getInstrumentName().equals("LC-MS")) {
 				  energy=maininstrumentsmap.get(mainInstrumenttemp.getInstrumentName());
+				  if(energy==null)
+					   energy=1.0;
 				 time=mainInstrumenttemp.getOperatingConditions().get("run_time");
 				  noofinjections=mainInstrumenttemp.getOperatingConditions().get("num_injections");
 				  energysum+=(energy*time*noofinjections)/60;

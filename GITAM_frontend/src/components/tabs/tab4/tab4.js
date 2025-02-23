@@ -6,7 +6,7 @@ import Modal from '../../Modal/Modal';
 const Tab4 = () => {
     const navigate = useNavigate();
     const [numAnalytes, setNumAnalytes] = useState('');
-    const [numRows, setNumRows] = useState(0);
+    //const [numRows, setNumRows] = useState(0);
     const [wasteInfo, setWasteInfo] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState('');
@@ -100,35 +100,44 @@ const Tab4 = () => {
     const closeGuide = () => setShowModal(false);
 
     const handleSubmit = async () => {
+        const numAnalytesValue = document.getElementById('numAnalytes').value.trim();
+        const instrumentPosiValue = document.getElementById('instrumentPosi').value;
+        const samplePreparationValue = document.getElementById('samplePreparation').value;
+        const derivatizationValue = document.getElementById('derivatization').value;
+    
+        if (!numAnalytesValue || !instrumentPosiValue || !samplePreparationValue || derivatizationValue === "Select Case") {
+            alert("Please fill all required fields: Number of Analytes Studied, Instrument Posi (Insitu), Sample Preparation, and Derivatization.");
+            return;
+        }
+    
         const requestData = {
-            numAnalytes,
+            numAnalytes: numAnalytesValue,
             wasteInfo,
-            samplePreparation: document.getElementById('samplePreparation').value,
-            derivatization: document.getElementById('derivatization').value,
+            samplePreparation: samplePreparationValue,
+            derivatization: derivatizationValue,
             wasteManagementSamples: document.getElementById('wasteManagementSamples').value,
             wasteManagementOthers: document.getElementById('wasteManagementOthers').value,
-            instrumentPosi: document.getElementById('instrumentPosi').value,
+            instrumentPosi: instrumentPosiValue,
         };
-
+    
         console.log("Request Data:", requestData);
-
+    
         try {
             const response = await fetch('http://localhost:8080/api/tab4-data', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData),
             });
-
+    
             const responseData = await response.json();
             console.log("Response Data:", responseData);
             navigate('/dashboard/tab5', { state: { data: responseData } });
-
+    
         } catch (error) {
             console.error("Error submitting data:", error);
-           // navigate('/dashboard/tab5', { state: { data: responseData } });
-
         }
     };
+    
 
     return (
         <div className="tab-content">
@@ -147,6 +156,7 @@ const Tab4 = () => {
             <div className="form-group">
                 <label htmlFor="instrumentPosi">Instrument Posi (Insitu):</label>
                 <select id="instrumentPosi">
+                <option value="">Select Instrument position</option>
                     <option value="In-Line">In-Line</option>
                     <option value="On-Line">On-Line</option>
                     <option value="At-Line">At-Line</option>
@@ -158,6 +168,7 @@ const Tab4 = () => {
             <div className="form-group">
                 <label htmlFor="samplePreparation">Sample Preparation:</label>
                 <select id="samplePreparation">
+                <option value="">Select Sample preperation</option>
                     <option value="Case-1">Case-1</option>
                     <option value="Case-2">Case-2</option>
                     <option value="Case-3">Case-3</option>
@@ -183,6 +194,7 @@ const Tab4 = () => {
             <div className="form-group">
                 <label htmlFor="wasteManagementSamples">Waste Management of Samples:</label>
                 <select id="wasteManagementSamples">
+                <option value="">Select waste management samples</option>
                     <option value="Reuse">Reuse</option>
                     <option value="Recycling">Recycling</option>
                     <option value="Degradations">Degradations</option>
@@ -195,6 +207,7 @@ const Tab4 = () => {
             <div className="form-group">
                 <label htmlFor="wasteManagementOthers">Waste Management of Others:</label>
                 <select id="wasteManagementOthers">
+                <option value="">Select Waste management Others</option>
                     <option value="Reuse">Reuse</option>
                     <option value="Recycling">Recycling</option>
                     <option value="Degradations">Degradations</option>

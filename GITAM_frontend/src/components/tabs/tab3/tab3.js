@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
+
 import { useNavigate } from 'react-router-dom';
 import './tab3.css';
 import Modal from '../../Modal/Modal';
@@ -7,6 +8,12 @@ const Tab3 = () => {
   const navigate = useNavigate();
   const [numRows1, setNumRows1] = useState(0);
   const [numRows2, setNumRows2] = useState(0);
+
+  
+const [nameData1, setNameData1] = useState([]);
+const [nameData2, setNameData2] = useState([]);
+const [inPercentData1, setInPercentData1] = useState([]);
+const [inPercentData2, setInPercentData2] = useState([]);
 
   // Separate states for each table
   const [nfpaHealthData1, setNfpaHealthData1] = useState([]);
@@ -20,15 +27,40 @@ const Tab3 = () => {
   const openGuide = () => setShowModal(true);
   const closeGuide = () => setShowModal(false);
 
+  useEffect(() => {
+    setNameData1((prev) => prev.length >= numRows1 ? prev.slice(0, numRows1) : [...prev, ...new Array(numRows1 - prev.length).fill("")]);
+    setInPercentData1((prev) => prev.length >= numRows1 ? prev.slice(0, numRows1) : [...prev, ...new Array(numRows1 - prev.length).fill("")]);
+    setNfpaHealthData1((prev) => prev.length >= numRows1 ? prev.slice(0, numRows1) : [...prev, ...new Array(numRows1 - prev.length).fill("")]);
+    setNfpaFlammabilityData1((prev) => prev.length >= numRows1 ? prev.slice(0, numRows1) : [...prev, ...new Array(numRows1 - prev.length).fill("")]);
+    setPhysicalHazardData1((prev) => prev.length >= numRows1 ? prev.slice(0, numRows1) : [...prev, ...new Array(numRows1 - prev.length).fill("")]);
+  }, [numRows1]);
+  
+  useEffect(() => {
+    setNameData2((prev) => prev.length >= numRows2 ? prev.slice(0, numRows2) : [...prev, ...new Array(numRows2 - prev.length).fill("")]);
+    setInPercentData2((prev) => prev.length >= numRows2 ? prev.slice(0, numRows2) : [...prev, ...new Array(numRows2 - prev.length).fill("")]);
+    setNfpaHealthData2((prev) => prev.length >= numRows2 ? prev.slice(0, numRows2) : [...prev, ...new Array(numRows2 - prev.length).fill("")]);
+    setNfpaFlammabilityData2((prev) => prev.length >= numRows2 ? prev.slice(0, numRows2) : [...prev, ...new Array(numRows2 - prev.length).fill("")]);
+    setPhysicalHazardData2((prev) => prev.length >= numRows2 ? prev.slice(0, numRows2) : [...prev, ...new Array(numRows2 - prev.length).fill("")]);
+  }, [numRows2]);
+  
+  
+
   const handleInputChange = (e, tableSetter, rowIndex, colIndex) => {
-    const value = e.target.value;
+    let value = e.target.value;
+
+    // Allow only numbers in the "in %" column (assuming it's always colIndex 2)
+    if (colIndex === 2 && value !== "" && isNaN(value)) {
+        return; // Ignore non-numeric input
+    }
+
     tableSetter((prevData) => {
-      const updatedData = [...prevData];
-      if (!updatedData[rowIndex]) updatedData[rowIndex] = [];
-      updatedData[rowIndex][colIndex] = value;
-      return updatedData;
+        const updatedData = [...prevData];
+        if (!updatedData[rowIndex]) updatedData[rowIndex] = [];
+        updatedData[rowIndex][colIndex] = value;
+        return updatedData;
     });
-  };
+};
+
 
   const createTable = (title, headers, inputTypes, numRows, tableData, tableSetter, ...dropdownOptions) => {
     return (
@@ -77,8 +109,32 @@ const Tab3 = () => {
       </table>
     );
   };
+  const isDataValid = () => {
+    if (numRows1 > 0) {
+        for (let i = 0; i < numRows1; i++) {
+            if (
+                !nameData1[i]?.trim() ||
+                nfpaHealthData1[i]?.[1] === undefined || 
+                nfpaHealthData1[i]?.[1] === null ||
+                nfpaHealthData1[i]?.[1] === "" ||
+                !inPercentData1[i]?.toString().trim() ||
+                nfpaFlammabilityData1[i]?.[1] === undefined || 
+                nfpaFlammabilityData1[i]?.[1] === null ||
+                nfpaFlammabilityData1[i]?.[1] === "" ||
+                !physicalHazardData1[i]?.[1] || 
+                !physicalHazardData1[i]?.[2] 
+            ) {
+                alert("Please fill all required fields for Chemicals");
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
 
   const handleSubmit = async () => {
+    if (!isDataValid()) return;
     const jsonData = {
         NumberOfChemicals: {
             NfpaHealthValue: nfpaHealthData1,
@@ -120,7 +176,6 @@ const Tab3 = () => {
         alert('Error: Failed to send data. Please try again.');
     }
 };
-  
   return (
     <div>
       <h3>Chemicals/Reagents/Solvents/Gas Used</h3>
