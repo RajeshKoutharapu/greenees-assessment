@@ -1,0 +1,61 @@
+.tab-content {
+    margin: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    margin-right: 10px;
+    flex: 1; 
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    flex: 2; 
+    padding: 5px;
+  }
+  
+  button {
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  #general-instruments-table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #general-instruments-table th, #general-instruments-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    color: black; 
+  }
+  
+  #general-instruments-table th {
+    background-color: #f4f4f4;
+    color: black;
+  }
+  
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  footer button {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+
+
+  

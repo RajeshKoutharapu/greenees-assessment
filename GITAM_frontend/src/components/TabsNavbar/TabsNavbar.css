@@ -1,0 +1,59 @@
+.tabs-navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f0f2f5;
+  padding: 12px 10px;
+  border-bottom: 2px solid #dee2e6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tabs-navbar button {
+  border: none;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  min-width: 180px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Fixed colors for each tab */
+.tabs-navbar button:nth-child(1) {
+  background-color: #007bff; /* Blue */
+}
+
+.tabs-navbar button:nth-child(2) {
+  background-color: #28a745; /* Green */
+}
+
+.tabs-navbar button:nth-child(3) {
+  background-color: #17a2b8; /* Teal */
+}
+
+.tabs-navbar button:nth-child(4) {
+  background-color: #ffc107; /* Yellow */
+  color: #212529;
+}
+
+.tabs-navbar button:nth-child(5) {
+  background-color: #6f42c1; /* Purple */
+}
+
+/* Active button (adds border and elevation) */
+.tabs-navbar button.active {
+  outline: 3px solid #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+}
+
+/* Hover effect */
+.tabs-navbar button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}

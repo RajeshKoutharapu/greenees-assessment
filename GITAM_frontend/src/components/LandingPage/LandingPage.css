@@ -1,0 +1,51 @@
+.landing-container {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.6); /* dark overlay for readability */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-box {
+    max-width: 1000px;
+    padding: 40px;
+    background-color: rgba(0, 100, 0, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.4);
+}
+
+.content-box h5 {
+    color: #90ee90;
+    font-weight: 600;
+}
+
+.content-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.explore-button {
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    background-color: #28a745;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.explore-button:hover {
+    background-color: #218838;
+    color: #fff;
+}

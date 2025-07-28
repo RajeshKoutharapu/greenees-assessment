@@ -1,0 +1,146 @@
+/* === CLEAN INPUT ROW STYLING === */
+.input-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.input-row label {
+  font-weight: 500;
+  color: #333;
+  font-size: 1rem;
+}
+
+.input-row input {
+  padding: 10px 14px;
+  border-radius: 50px;
+  border: 1px solid #ced4da;
+  width: 240px;
+  background-color: #fff;
+  color: #333;
+  transition: 0.2s ease-in-out;
+}
+
+.input-row input:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
+  border-color: #80bdff;
+}
+
+.input-row button {
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-weight: 600;
+  background-color: #20c997;
+  border: none;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.input-row button:hover {
+  background-color: #17a589;
+}
+
+/* === TABLE SECTION === */
+.table-section {
+  margin-top: 25px;
+}
+
+.chemical-table {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 30px;
+  border: 1px solid #dee2e6;
+}
+
+.chemical-table thead {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.chemical-table th,
+.chemical-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #dee2e6;
+  font-size: 0.95rem;
+  background-color: #fff;
+  color: #212529;
+}
+
+/* === INPUT & SELECT FIELDS INSIDE TABLE === */
+.chemical-table input,
+.chemical-table select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  background-color: #fff;
+  color: #212529;
+  box-shadow: none;
+}
+
+.chemical-table input:focus,
+.chemical-table select:focus {
+  border-color:  #6610f2;
+  box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* === HEADINGS === */
+h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #343a40;
+  margin-bottom: 1rem;
+}
+
+/* === FOOTER BUTTONS === */
+footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  gap: 10px;
+}
+
+footer button {
+  background-color:  #6610f2;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  font-weight: 600;
+  border-radius: 50px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+footer button:hover {
+  background-color:  #6610f2;
+}
+
+/* === MODAL CLEAN STYLE === */
+.modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-content h5 {
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-content p {
+  color: #555;
+}
