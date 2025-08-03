@@ -144,7 +144,6 @@ public class tab4Service {
 	    	  System.out.println(" check :"+temp);
 		tempsum+=temp;
 	   }
-	      System.out.println("LJCZHJKDSKSDHFJKDJFLFHIUHI");
 	    totalwastegenerated=Math.round((tab1service.tab1calcvalues.get("preperaionwaste")+tab2service.getEfluentWaste()+tempsum)/numberofanalytes)+.0;
         if(totalwastegenerated>=250)
         	 return 0;

@@ -33,7 +33,7 @@ const Tab2 = () => {
     'GC-MS': 'GC_MS',
     'HPLC': 'HPLC',
     'HPLC-Prep': 'OtherInstruments',
-    'ICP-MA': 'OtherInstruments',
+    'ICP-MS': 'OtherInstruments',
     'ICP-OES': 'OtherInstruments',
     'LC-MS': 'LC_MS',
     'Nano Spectrophotometer': 'OtherInstruments',
@@ -228,23 +228,23 @@ const Tab2 = () => {
         { label: 'Number of injections', field: 'num_injections' },
       ],
       NMR: [
-        { label: 'Time for scanning (1 sample)', field: 'scan_time' },
+        { label: 'Time for scanning (1 sample in mins)', field: 'scan_time' },
         { label: 'Number of scans', field: 'num_scans' },
       ],
       GC: [
         { label: 'Column length in mm', field: 'column_length' },
-        { label: 'Column temperature °C', field: 'column_temp' },
-        { label: 'Sample temperature °C', field: 'sample_temp' },
-        { label: 'Flow rate (mL/min)', field: 'flow_rate' },
+        { label: 'Column oven temperature °C', field: 'column_temp' },
+        { label: 'Sample oven temperature °C', field: 'sample_temp' },
+        { label: 'Carrier gas Flow rate (mL/min)', field: 'flow_rate' },
         { label: 'Run time (mins)', field: 'run_time' },
         { label: 'Number of injections', field: 'num_injections' },
       ],
       IR: [
-        { label: 'Time for scanning (1 sample)', field: 'scan_time' },
+        { label: 'Time for scanning (1 sample in mins)', field: 'scan_time' },
         { label: 'Number of scans', field: 'num_scans' },
       ],
       UV: [
-        { label: 'Time for scanning (1 sample)', field: 'scan_time' },
+        { label: 'Time for scanning (1 sample in mins)', field: 'scan_time' },
         { label: 'Number of scans', field: 'num_scans' },
       ],
       UPLC: [
@@ -265,22 +265,22 @@ const Tab2 = () => {
       ],
       GC_MS: [
         { label: 'Column length in mm', field: 'column_length' },
-        { label: 'Column temperature °C', field: 'column_temp' },
-        { label: 'Sample temperature °C', field: 'sample_temp' },
-        { label: 'Flow rate (mL/min)', field: 'flow_rate' },
+        { label: 'Column oven temperature °C', field: 'column_temp' },
+        { label: 'Sample oven temperature °C', field: 'sample_temp' },
+        { label: 'Carrier gas Flow rate (mL/min)', field: 'flow_rate' },
         { label: 'Run time (mins)', field: 'run_time' },
         { label: 'Number of injections', field: 'num_injections' },
       ],
       FT_IR: [
-        { label: 'Time for scanning (1 sample)', field: 'scan_time' },
+        { label: 'Time for scanning (1 sample in mins)', field: 'scan_time' },
         { label: 'Number of scans', field: 'num_scans' },
       ],
       Dissolution: [
         { label: 'Media Volume used for 6 bowls', field: 'Media Volume used for 6 bowls' },
-        { label: 'Time in mins', field: 'Time in minsn' },
+        { label: 'Time in mins', field: 'Time in mins' },
       ],
       OtherInstruments: [
-        { label: 'Time for of study', field: 'Time for of study' },
+        { label: 'Time for of study (mins)', field: 'Time for of study' },
         { label: 'Number of samles studied', field: 'Number of samles studied' },
       ],
     };
@@ -403,7 +403,7 @@ const Tab2 = () => {
       }
 
       console.log("Data submitted successfully!");
-      navigate("/dashboard/tab3"); // Navigate only if submission is successful
+      navigate("/dashboard/Chemicals_Reagents_Solvents_Gas"); // Navigate only if submission is successful
     } catch (error) {
       console.error("Submission Error:", error);
       alert("An error occurred while submitting the data. Please try again.");
@@ -445,11 +445,19 @@ const Tab2 = () => {
           onChange={(e) => setMainInstrumentsCount(Number(e.target.value))}
         />
       </div>
-
+        
       {generateMainInstrumentDropdowns(mainInstrumentsCount)}
 
+  <div className="alert alert-info" role="alert">
+    <strong>Note:</strong> Note: Except carrier gas flow rate, rest of the gasses flow rate and information mentioned in Chemicals/Reagents/Gases Section.
+
+  </div>
+
+
+
+
       <footer>
-        <button onClick={() => navigate('/dashboard/tab1')}>Back</button>
+        <button onClick={() => navigate('/dashboard/Title_Preparations')}>Back</button>
         <button   onClick={handleSubmit}> Next ➡️</button>
       </footer>
     </div>

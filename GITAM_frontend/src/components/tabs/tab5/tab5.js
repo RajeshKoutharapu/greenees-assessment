@@ -192,7 +192,7 @@ const barValuePlugin = {
                     <tr><th>Instrument Position</th><td>{reportData.instrumentPosition}</td></tr>
                     <tr><th>Sample Preparation</th><td>{reportData.samplePreparationInformation}</td></tr>
                     <tr><th>Derivatization</th><td>{reportData.derivatizationInformation}</td></tr>
-                    <tr><th>Waste Management</th><td>{reportData.wasteManagement}</td></tr>
+                    <tr><th>Waste Management for chemicals and consumbles(eg;filters, tubes)</th><td>{reportData.wasteManagement}</td></tr>
                     <tr><th>Waste Management Info</th><td>{reportData.wastemanagementInformation}</td></tr>
                     <tr><th>Greenness (%)</th><td>{reportData.resultsGreenness}</td></tr>
                     <tr><th>Final Result</th><td>{reportData.finalResult}</td></tr>
@@ -205,15 +205,24 @@ const barValuePlugin = {
   data={barChartData}
   options={{
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: true, // REQUIRED if using height prop
     scales: {
       y: {
-        beginAtZero: true
+        beginAtZero: true,
+        max: 120
+      }
+    },
+    layout: {
+      padding: {
+        top: 20
       }
     }
   }}
-  plugins={[barValuePlugin]} // 👈 Add this
+  height={200}  // Works only with maintainAspectRatio: true
+  plugins={[barValuePlugin]}
 />
+
+
   </div>
 
   <div className="doughnut-graph">

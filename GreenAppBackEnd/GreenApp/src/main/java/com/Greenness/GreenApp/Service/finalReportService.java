@@ -59,9 +59,9 @@ public class finalReportService {
      if(greenness>=60)
     	 finalreportmwmbersmap.put("finalResult","Green");
      else if(greenness>=50 && greenness<=59.9)
-    	 finalreportmwmbersmap.put("finalResult","Yellow");
+    	 finalreportmwmbersmap.put("finalResult","moderately"+ " Green");
      else
-    	 finalreportmwmbersmap.put("finalResult","Red");
+    	 finalreportmwmbersmap.put("finalResult","Non Green");
 
 
      System.out.println(finalreportmwmbersmap);

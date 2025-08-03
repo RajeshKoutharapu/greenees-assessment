@@ -42,36 +42,66 @@ const Tab3 = () => {
   ]);
 
   const handleInputChange = (e, setter, rowIndex, colIndex, tableType) => {
-    const value = e.target.value;
+  const value = e.target.value;
 
-    setter(prev => {
-      const updated = [...prev];
-      if (!updated[rowIndex]) updated[rowIndex] = [];
-      updated[rowIndex][colIndex] = value;
-      return updated;
-    });
+  setter(prev => {
+    const updated = [...prev];
+    if (!updated[rowIndex]) updated[rowIndex] = [];
+    updated[rowIndex][colIndex] = value;
+    return updated;
+  });
 
-    if (colIndex === 0) {
-      const syncName = (dataSetter) => {
-        dataSetter(prev => {
-          const updated = [...prev];
-          if (!updated[rowIndex]) updated[rowIndex] = [];
-          updated[rowIndex][0] = value;
-          return updated;
-        });
-      };
+  // Sync Name (column 0)
+  if (colIndex === 0) {
+    const syncName = (dataSetter) => {
+      dataSetter(prev => {
+        const updated = [...prev];
+        if (!updated[rowIndex]) updated[rowIndex] = [];
+        updated[rowIndex][0] = value;
+        return updated;
+      });
+    };
 
-      if (tableType === 'chemicals') {
-        syncName(setNfpaHealthData1);
-        syncName(setNfpaFlammabilityData1);
-        syncName(setPhysicalHazardData1);
-      } else if (tableType === 'gases') {
-        syncName(setNfpaHealthData2);
-        syncName(setNfpaFlammabilityData2);
-        syncName(setPhysicalHazardData2);
-      }
+    if (tableType === 'chemicals') {
+      syncName(setNfpaHealthData1);
+      syncName(setNfpaFlammabilityData1);
+      syncName(setPhysicalHazardData1);
+    } else if (tableType === 'gases') {
+      syncName(setNfpaHealthData2);
+      syncName(setNfpaFlammabilityData2);
+      syncName(setPhysicalHazardData2);
     }
-  };
+  }
+
+  // Sync Purity in % (column 2) for chemicals
+  if (tableType === 'chemicals' && colIndex === 2) {
+    const syncPurity = (dataSetter) => {
+      dataSetter(prev => {
+        const updated = [...prev];
+        if (!updated[rowIndex]) updated[rowIndex] = [];
+        updated[rowIndex][2] = value;
+        return updated;
+      });
+    };
+    syncPurity(setNfpaHealthData1);
+    syncPurity(setNfpaFlammabilityData1);
+  }
+
+  // Sync Flow mL/min (column 2) for gases
+  if (tableType === 'gases' && colIndex === 2) {
+    const syncFlow = (dataSetter) => {
+      dataSetter(prev => {
+        const updated = [...prev];
+        if (!updated[rowIndex]) updated[rowIndex] = [];
+        updated[rowIndex][2] = value;
+        return updated;
+      });
+    };
+    syncFlow(setNfpaHealthData2);
+    syncFlow(setNfpaFlammabilityData2);
+  }
+};
+
 
   const createTable = (title, headers, inputTypes, numRows, tableData, tableSetter, tableType, ...dropdownOptions) => (
     <table className="chemical-table">
@@ -161,7 +191,7 @@ const Tab3 = () => {
       const text = await response.text();
       if (!response.ok) throw new Error(`Server Error: ${response.statusText}`);
       console.log('Server Response:', text ? JSON.parse(text) : {});
-      navigate('/dashboard/tab4');
+      navigate('/dashboard/General');
     } catch (err) {
       alert('Failed to submit data. Please try again.');
       console.error(err);
@@ -228,7 +258,7 @@ const Tab3 = () => {
       )}
 
       <footer>
-        <button onClick={() => navigate('/dashboard/tab2')}>Back</button>
+        <button onClick={() => navigate('/dashboard/IntstrumentsExperiments')}>Back</button>
         <button className="btn btn-secondary" onClick={openGuide1}>Guide for PhysicalHazard and SignalWord</button>
         <button onClick={handleSubmit}> Next ➡️</button>
       </footer>

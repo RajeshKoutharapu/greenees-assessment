@@ -183,7 +183,7 @@ useEffect(() => {
       console.error("Error submitting data:", error);
     }
 
-    navigate("/dashboard/tab2");
+    navigate("/dashboard/IntstrumentsExperiments");
   };
 
   return (<div className="container mt-5 tab1-container">

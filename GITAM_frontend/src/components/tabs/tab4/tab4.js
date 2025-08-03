@@ -151,7 +151,7 @@ const Tab4 = () => {
 
             const responseData = await response.json();
             console.log("Response Data:", responseData);
-            navigate('/dashboard/tab5', { state: { data: responseData } });
+            navigate('/dashboard/FinalReport', { state: { data: responseData } });
 
         } catch (error) {
             console.error("Error submitting data:", error);
@@ -249,7 +249,7 @@ const Tab4 = () => {
 
             {/* Navigation Footer */}
             <footer>
-                <button onClick={() => navigate('/dashboard/tab3')}>Back</button>
+                <button onClick={() => navigate('/dashboard/Chemicals_Reagents_Solvents_Gas')}>Back</button>
                 <button onClick={handleSubmit}> Next ➡️</button>
             </footer>
 
